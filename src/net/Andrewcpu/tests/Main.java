@@ -1,24 +1,50 @@
 package net.Andrewcpu.tests;
 
 import net.Andrewcpu.engine.Engine;
+import net.Andrewcpu.engine.listeners.MouseListener;
 import net.Andrewcpu.engine.world.Entity;
-import net.Andrewcpu.engine.listeners.CollisionListener;
-import net.Andrewcpu.engine.listeners.EventManager;
+import net.Andrewcpu.engine.world.Frame;
+import net.Andrewcpu.engine.world.World;
+import net.Andrewcpu.tests.entities.Player;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * Created by stein on 5/10/2016.
  */
-public class Main {
+public class Main extends JFrame{
     public static void main(String[] args){
-        EventManager eventManager = Engine.getEventManager();
-        //1.7
-        eventManager.registerCollisionListener(new CollisionListener() {
+        new Main();
+    }
+    public Main(){
+        setLayout(null);
+        setBounds(0,0,500,500);
+        setTitle("Game");
+        setupWorld();
+        Frame frame = new Frame();
+        frame.setBounds(getBounds());
+        add(frame);
+        setVisible(true);
+    }
+    public void setupWorld(){
+        Player player = new Player(250,250,50,50);
+        World world = World.getInstance();
+        world.addEntity(player);
+        Engine.getEventManager().registerTickListener(()->{tick();});
+        Engine.getEventManager().registerMouseListener(new MouseListener() {
             @Override
-            public void onCollision(Entity e1, Entity e2) {
-                System.out.println(e1.getUUID().toString() + " hit " + e2.getUUID().toString());
+            public void mouseMoved(Point point) {
+
+            }
+
+            @Override
+            public void mouseDragged(Point point) {
+
             }
         });
-        //1.8
-
+    }
+    public void tick(){
+        repaint();
     }
 }
