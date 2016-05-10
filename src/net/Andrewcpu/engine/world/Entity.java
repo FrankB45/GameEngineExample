@@ -1,11 +1,12 @@
 package net.Andrewcpu.engine.world;
 
+import java.awt.*;
 import java.util.UUID;
 
 /**
  * Created by stein on 5/10/2016.
  */
-public class Entity {
+public class Entity implements Renderable{
     private UUID uuid = UUID.randomUUID();
     private int x,y,width,height;
 
@@ -53,5 +54,22 @@ public class Entity {
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public Point getLocation(){
+        return new Point(getX(),getY());
+    }
+
+    public Rectangle getBounds(){
+        return new Rectangle(getX(),getY(),getWidth(),getHeight());
+    }
+
+    public void tick(){
+
+    }
+
+    @Override
+    public void draw(Graphics g) {
+        g.fillRect(getX(),getY(),getWidth(),getHeight());
     }
 }

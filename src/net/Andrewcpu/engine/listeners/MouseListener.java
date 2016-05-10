@@ -8,4 +8,5 @@ import java.awt.*;
 public interface MouseListener {
     void mouseMoved(Point point);
     void mouseDragged(Point point);
+    void mouseClicked(Point point);
 }

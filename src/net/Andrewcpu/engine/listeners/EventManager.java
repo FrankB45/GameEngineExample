@@ -9,6 +9,7 @@ public class EventManager {
     private LinkedList<CollisionListener> collisionListeners = new LinkedList<>();
     private LinkedList<TickListener> tickListeners = new LinkedList<>();
     private LinkedList<MouseListener> mouseListeners = new LinkedList<>();
+    private LinkedList<KeyListener> keyListeners = new LinkedList<>();
     public void registerCollisionListener(CollisionListener listener){
         collisionListeners.add(listener);
     }
@@ -40,6 +41,7 @@ public class EventManager {
     public void setTickListeners(LinkedList<TickListener> tickListeners) {
         this.tickListeners = tickListeners;
     }
+    
     public void registerMouseListener(MouseListener listener){
         mouseListeners.add(listener);
     }
@@ -54,5 +56,22 @@ public class EventManager {
     }
     public void setMouseListeners(LinkedList<MouseListener> mouseListeners) {
         this.mouseListeners = mouseListeners;
+    }    
+    
+    public void registerKeyListener(KeyListener listener){
+        keyListeners.add(listener);
     }
+    public void unregisterKeyListener(KeyListener listener){
+        keyListeners.remove(listener);
+    }
+    public boolean isKeyDetectorRegistered(KeyListener listener){
+        return keyListeners.contains(listener);
+    }
+    public LinkedList<KeyListener> getKeyListeners() {
+        return keyListeners;
+    }
+    public void setKeyListeners(LinkedList<KeyListener> keyListeners) {
+        this.keyListeners = keyListeners;
+    }
+
 }
