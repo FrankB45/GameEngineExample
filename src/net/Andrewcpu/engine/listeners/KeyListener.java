@@ -5,4 +5,5 @@ package net.Andrewcpu.engine.listeners;
  */
 public interface KeyListener {
     void keyPressed(int keyCode);
+    void keyReleased(int keyCode);
 }

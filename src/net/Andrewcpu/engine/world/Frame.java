@@ -17,9 +17,9 @@ import java.awt.event.MouseMotionListener;
  */
 public class Frame extends JComponent implements MouseMotionListener,Renderable,KeyListener, java.awt.event.MouseListener{
     public Frame(){
+        addKeyListener(this);
         addMouseMotionListener(this);
         addMouseListener(this);
-        addKeyListener(this);
     }
     @Override
     public void mouseDragged(MouseEvent e) {
@@ -54,11 +54,14 @@ public class Frame extends JComponent implements MouseMotionListener,Renderable,
         for(net.Andrewcpu.engine.listeners.KeyListener keyListener : Engine.getEventManager().getKeyListeners()){
             keyListener.keyPressed(e.getKeyCode());
         }
+        System.out.println("TEST");
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        for(net.Andrewcpu.engine.listeners.KeyListener keyListener : Engine.getEventManager().getKeyListeners()){
+            keyListener.keyReleased(e.getKeyCode());
+        }
     }
 
     @Override

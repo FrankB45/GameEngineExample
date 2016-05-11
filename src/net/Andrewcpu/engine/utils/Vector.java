@@ -30,4 +30,22 @@ public class Vector {
     public void setY(double y) {
         this.y = y;
     }
+    public void equalize(){
+        double run = getX();
+        double rise = getY();
+        boolean neg = (run<0);
+        double nRise = rise/run;
+
+        double nRun = run/run;
+        nRun = (neg) ? -nRun : nRun;
+
+        setX(nRun);
+        setY(nRise);
+
+        System.out.println(this.toString());
+    }
+    @Override
+    public String toString(){
+        return getX() + ", " + getY();
+    }
 }

@@ -3,6 +3,8 @@ package net.Andrewcpu.tests.world.entities;
 import net.Andrewcpu.engine.world.Entity;
 
 import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 /**
  * Created by stein on 5/10/2016.
@@ -12,6 +14,25 @@ public class Player extends Entity {
     private Point target = new Point(0,0);
     private int speed = 1;
     private int health = 500, maxHealth = 500;
+    private java.util.List<Integer> keyCodes = new ArrayList<>();
+
+    public void pressKey(int i){
+        keyCodes.add(Integer.valueOf(i));
+    }
+    public void releaseKey(int i){
+        keyCodes.remove(Integer.valueOf(i));
+    }
+    public boolean isPressing(int i){
+        return keyCodes.contains(Integer.valueOf(i));
+    }
+
+    public List<Integer> getKeyCodes() {
+        return keyCodes;
+    }
+
+    public void setKeyCodes(List<Integer> keyCodes) {
+        this.keyCodes = keyCodes;
+    }
 
     public int getMaxHealth() {
         return maxHealth;
@@ -59,17 +80,19 @@ public class Player extends Entity {
 
     @Override
     public void tick(){
-        if(getX()<target.getX()){
-            setX(getX()+speed);
-        }
-        if(getX()>target.getX()){
-            setX(getX()-speed);
-        }
-        if(getY()>target.getY()){
-            setY(getY()-speed);
-        }
-        if(getY()<target.getY()){
-            setY(getY()+speed);
+        if(speed>0){
+            if(getX()<target.getX()){
+                setX(getX()+speed);
+            }
+            if(getX()>target.getX()){
+                setX(getX()-speed);
+            }
+            if(getY()>target.getY()){
+                setY(getY()-speed);
+            }
+            if(getY()<target.getY()){
+                setY(getY()+speed);
+            }
         }
     }
 
