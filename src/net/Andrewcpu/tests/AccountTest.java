@@ -10,8 +10,8 @@ public class AccountTest {
         //573280b49371d
         AccountManager accountManager = new AccountManager("573280b49371d");
         try {
-            System.out.println(accountManager.createAccount("AndrewCPU","@Mommy828","stein.andrew.01@gmail.com").toString());
-            System.out.println(accountManager.validate("AndrewCPU","@Mommy828").toString());
+            System.out.println(accountManager.createAccount("AndrewCPU","X","stein.andrew.01@gmail.com").toString());
+            System.out.println(accountManager.validate("AndrewCPU","X").toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
