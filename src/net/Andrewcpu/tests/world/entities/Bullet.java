@@ -3,6 +3,7 @@ package net.Andrewcpu.tests.world.entities;
 import com.sun.corba.se.impl.orbutil.graph.Graph;
 import net.Andrewcpu.engine.utils.Vector;
 import net.Andrewcpu.engine.world.Entity;
+import net.Andrewcpu.engine.world.World;
 
 import java.awt.*;
 
@@ -10,15 +11,49 @@ import java.awt.*;
  * Created by stein on 5/10/2016.
  */
 public class Bullet extends Entity {
-    private int x, y, width, height;
+    private int x, y, width, height, age = 0,maxAge = 10000;
     private Vector slope = new Vector(0,0);
-
-    public Bullet(int x, int y, int width, int height) {
+    private double angle = 0;
+    private Entity shooter = null;
+    public Bullet(int x, int y, int width, int height, Entity shooter) {
         super(x, y, width, height);
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        this.shooter = shooter;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public int getMaxAge() {
+        return maxAge;
+    }
+
+    public void setMaxAge(int maxAge) {
+        this.maxAge = maxAge;
+    }
+
+    public Entity getShooter() {
+        return shooter;
+    }
+
+    public void setShooter(Entity shooter) {
+        this.shooter = shooter;
+    }
+
+    public double getAngle() {
+        return Math.toRadians(angle);
+    }
+
+    public void setAngle(double angle) {
+        this.angle = angle;
     }
 
     @Override
@@ -77,7 +112,16 @@ public class Bullet extends Entity {
 
     @Override
     public void tick(){
-        setX(getX() + (int)slope.getX());
-        setY(getY() + (int)slope.getY());
+        moveForward(5);
+        setAge(getAge()+1);
+        if(getAge()==getMaxAge()){
+            World.getInstance().removeEntity(this);
+        }
+//        setX(getX() + (int)slope.getX());
+//        setY(getY() + (int)slope.getY());
+    }
+    public void moveForward(int speed) {
+        x += Math.cos(getAngle())*speed;
+        y += Math.sin(getAngle())*speed;
     }
 }
