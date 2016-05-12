@@ -46,13 +46,29 @@ public class Engine {
     public static void setEventManager(EventManager eventManager) {
         Engine.eventManager = eventManager;
     }
-    static {
-        Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(()->{
-            if(!pauseTick) {
-                World.getInstance().tick();
-                getEventManager().getTickListeners().forEach((tickListener) -> tickListener.onTick());
+    private static long lastStartTime = 0;
+    public static void startTickLoop(int FPS){
+        long maxWorkingTimePerFrame = 1000 / FPS;  //this is optional
+        lastStartTime = System.currentTimeMillis();
+        while(!pauseTick)
+        {
+            long elapsedTime = System.currentTimeMillis() - lastStartTime;
+            lastStartTime = System.currentTimeMillis();
+            World.getInstance().tick();
+            getEventManager().getTickListeners().forEach((tickListener) -> tickListener.onTick());
+            long processingTimeForCurrentFrame = System.currentTimeMillis() - lastStartTime;
+            if(processingTimeForCurrentFrame  < maxWorkingTimePerFrame)
+            {
+                try
+                {
+                    Thread.sleep(maxWorkingTimePerFrame - processingTimeForCurrentFrame);
+                }
+                catch(Exception e)
+                {
+                    System.err.println("Engine :: run :: " + e);
+                }
             }
-        }, 20, 20, TimeUnit.MILLISECONDS);
+        }
     }
 
 }
