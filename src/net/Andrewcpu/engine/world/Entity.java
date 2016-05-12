@@ -64,6 +64,16 @@ public class Entity implements Renderable{
         return new Rectangle(getX(),getY(),getWidth(),getHeight());
     }
 
+    public void setLocation(int x, int y){
+        setX(x);
+        setY(y);
+    }
+
+    public void setLocation(Point point){
+        setX((int)point.getX());
+        setY((int)point.getY());
+    }
+
     public void tick(){
 
     }

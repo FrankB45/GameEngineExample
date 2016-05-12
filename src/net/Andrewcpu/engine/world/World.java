@@ -1,5 +1,8 @@
 package net.Andrewcpu.engine.world;
 
+import net.Andrewcpu.engine.Engine;
+import net.Andrewcpu.engine.listeners.CollisionListener;
+
 import java.awt.*;
 import java.util.*;
 import java.util.List;
@@ -17,12 +20,14 @@ public class World implements Renderable{
             instance = new World();
         return instance;
     }
-    private java.util.LinkedList<Entity> entities = new LinkedList<>();
+    private LinkedList<Entity> entities = new LinkedList<>();
+    private LinkedList<Entity> addQueue = new LinkedList<>();
+    private LinkedList<Entity> removeQueue = new LinkedList<>();
     public void addEntity(Entity entity){
-        entities.add(entity);
+        addQueue.add(entity);
     }
     public void removeEntity(Entity entity){
-        entities.remove(entity);
+        removeQueue.add(entity);
     }
     public boolean doesWorldContainEntity(Entity entity){
         return entities.contains(entity);
@@ -45,10 +50,33 @@ public class World implements Renderable{
         this.entities = entities;
     }
 
+    public void tick(){
+        entities.removeAll(removeQueue);
+        entities.addAll(addQueue);
+        addQueue.clear();
+        removeQueue.clear();
+        for(Entity entity : World.getInstance().getEntities()) {
+            entity.tick();
+            for(Entity e : World.getInstance().getEntities()){
+                if(e==entity)
+                    continue;
+                if(e.getBounds().intersects(entity.getBounds())){
+                    throwCollision(e,entity);
+                }
+            }
+        }
+    }
+
+    private static void throwCollision(Entity entity, Entity entity2){
+        for(CollisionListener collisionListener : Engine.getEventManager().getCollisionListeners()){
+            collisionListener.onCollision(entity,entity2);
+        }
+    }
+
     @Override
     public void draw(Graphics g) {
         g.setColor(Color.BLACK);
-        g.fillRect(0,0,500,500);
+        g.fillRect(0,0,Engine.getWIDTH(),Engine.getHEIGHT());
         for(Entity entity : entities)
             entity.draw(g);
     }

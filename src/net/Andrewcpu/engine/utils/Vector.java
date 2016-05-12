@@ -31,6 +31,7 @@ public class Vector {
         this.y = y;
     }
     public void equalize(){
+        System.out.println(toString());
         double run = getX();
         double rise = getY();
         boolean neg = (run<0);

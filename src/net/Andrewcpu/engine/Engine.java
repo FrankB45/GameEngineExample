@@ -15,6 +15,24 @@ public class Engine {
     private static EventManager eventManager = new EventManager();
     private static boolean pauseTick = false;
 
+    private static int WIDTH, HEIGHT;
+
+    public static int getWIDTH() {
+        return WIDTH;
+    }
+
+    public static void setWIDTH(int WIDTH) {
+        Engine.WIDTH = WIDTH;
+    }
+
+    public static int getHEIGHT() {
+        return HEIGHT;
+    }
+
+    public static void setHEIGHT(int HEIGHT) {
+        Engine.HEIGHT = HEIGHT;
+    }
+
     public static EventManager getEventManager() {
         return eventManager;
     }
@@ -31,26 +49,10 @@ public class Engine {
     static {
         Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(()->{
             if(!pauseTick) {
-                worldTick();
+                World.getInstance().tick();
                 getEventManager().getTickListeners().forEach((tickListener) -> tickListener.onTick());
             }
         }, 20, 20, TimeUnit.MILLISECONDS);
     }
-    private static void worldTick(){
-        for(Entity entity : World.getInstance().getEntities()) {
-            entity.tick();
-            for(Entity e : World.getInstance().getEntities()){
-                if(e==entity)
-                    continue;
-                if(e.getBounds().intersects(entity.getBounds())){
-                    throwCollision(e,entity);
-                }
-            }
-        }
-    }
-    private static void throwCollision(Entity entity, Entity entity2){
-        for(CollisionListener collisionListener : getEventManager().getCollisionListeners()){
-            collisionListener.onCollision(entity,entity2);
-        }
-    }
+
 }
