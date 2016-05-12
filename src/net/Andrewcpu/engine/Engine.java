@@ -1,12 +1,7 @@
 package net.Andrewcpu.engine;
 
-import net.Andrewcpu.engine.listeners.CollisionListener;
 import net.Andrewcpu.engine.listeners.EventManager;
-import net.Andrewcpu.engine.world.Entity;
 import net.Andrewcpu.engine.world.World;
-
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by stein on 5/10/2016.

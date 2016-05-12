@@ -1,6 +1,7 @@
 package net.Andrewcpu.tests.world.entities;
 
 import com.sun.corba.se.impl.orbutil.graph.Graph;
+import net.Andrewcpu.engine.Engine;
 import net.Andrewcpu.engine.utils.Vector;
 import net.Andrewcpu.engine.world.Entity;
 import net.Andrewcpu.engine.world.World;
@@ -11,7 +12,7 @@ import java.awt.*;
  * Created by stein on 5/10/2016.
  */
 public class Bullet extends Entity {
-    private int x, y, width, height, age = 0,maxAge = 10000;
+    private int x, y, width, height, age = 0,maxAge = 2500;
     private Vector slope = new Vector(0,0);
     private double angle = 0;
     private Entity shooter = null;
@@ -106,8 +107,13 @@ public class Bullet extends Entity {
 
     @Override
     public void draw(Graphics g){
-        g.setColor(Color.RED);
-        g.fillRect(getX(),getY(),getWidth(),getHeight());
+        if(getX()<0 || getY()<0 || getX()> Engine.getWIDTH() || getY()> Engine.getHEIGHT()){
+
+        }
+        else{
+            g.setColor(Color.RED);
+            g.fillRect(getX(),getY(),getWidth(),getHeight());
+        }
     }
 
     @Override

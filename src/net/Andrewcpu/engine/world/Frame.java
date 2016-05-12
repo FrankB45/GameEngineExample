@@ -1,9 +1,7 @@
 package net.Andrewcpu.engine.world;
 
 import net.Andrewcpu.engine.Engine;
-import net.Andrewcpu.engine.listeners.EventManager;
 import net.Andrewcpu.engine.listeners.MouseListener;
-import net.Andrewcpu.tests.world.entities.Bullet;
 
 import javax.swing.*;
 import java.awt.*;

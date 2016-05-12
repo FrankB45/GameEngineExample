@@ -44,7 +44,6 @@ public class Main extends JFrame{
             }
         });
         Engine.startTickLoop(30);
-
     }
     public static Player player = new Player(250,250,50,50);
     private java.util.List<Player> enemies = new ArrayList<>();
