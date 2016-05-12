@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class World implements Renderable{
     private static World instance = null;
+    private Color color = Color.WHITE;
     public World(){
         instance = this;
     }
@@ -69,9 +70,18 @@ public class World implements Renderable{
             collisionListener.onCollision(entity,entity2);
         }
     }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
     @Override
     public void draw(Graphics g) {
-        g.setColor(Color.BLACK);
+        g.setColor(color);
         g.fillRect(0,0,Engine.getWIDTH(),Engine.getHEIGHT());
         try{
             entities.forEach((entity)-> entity.draw(g));

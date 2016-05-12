@@ -1,7 +1,10 @@
-package net.Andrewcpu.engine.world;
+package net.Andrewcpu.engine.display;
 
 import net.Andrewcpu.engine.Engine;
+import net.Andrewcpu.engine.display.elements.Element;
 import net.Andrewcpu.engine.listeners.MouseListener;
+import net.Andrewcpu.engine.world.Renderable;
+import net.Andrewcpu.engine.world.World;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,16 +12,26 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.util.*;
 
 /**
  * Created by stein on 5/10/2016.
  */
 public class Frame extends JComponent implements MouseMotionListener,Renderable,KeyListener, java.awt.event.MouseListener{
+    private java.util.List<Element> elements = new ArrayList<>();
     public Frame(){
         addKeyListener(this);
         addMouseMotionListener(this);
         addMouseListener(this);
     }
+
+    public void addElement(Element element){
+        elements.add(element);
+    }
+    public void removeElement(Element element){
+        elements.remove(element);
+    }
+
     @Override
     public void mouseDragged(MouseEvent e) {
         for(MouseListener mouseListener : Engine.getEventManager().getMouseListeners())
@@ -33,7 +46,7 @@ public class Frame extends JComponent implements MouseMotionListener,Renderable,
 
     @Override
     public void draw(Graphics g) {
-
+        elements.forEach(element -> {element.draw(g);});
     }
 
     @Override

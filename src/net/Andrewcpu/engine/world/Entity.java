@@ -1,6 +1,7 @@
 package net.Andrewcpu.engine.world;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.util.UUID;
 
 /**
@@ -9,12 +10,25 @@ import java.util.UUID;
 public class Entity implements Renderable{
     private UUID uuid = UUID.randomUUID();
     private int x,y,width,height;
+    private double rotation = 0;
 
     public Entity(int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+    }
+
+    public double getAngle(){
+        return Math.toRadians(getRotation());
+    }
+
+    public double getRotation() {
+        return rotation;
+    }
+
+    public void setRotation(double rotation) {
+        this.rotation = rotation;
     }
 
     public UUID getUUID() {
@@ -74,12 +88,33 @@ public class Entity implements Renderable{
         setY((int)point.getY());
     }
 
+
+    public void left(int speed){
+        setX(getX() - speed);
+    }
+    public void right(int speed){
+        setX(getX() + speed);
+    }
+
+    public void up(int speed){
+        setY(getY() - speed);
+    }
+    public void down(int speed){
+        setY(getY() + speed);
+    }
+
     public void tick(){
 
     }
 
     @Override
     public void draw(Graphics g) {
-        g.fillRect(getX(),getY(),getWidth(),getHeight());
+        Graphics2D g2 = (Graphics2D)g;
+        AffineTransform old = g2.getTransform();
+        AffineTransform transform = new AffineTransform();
+        transform.rotate(Math.toRadians(getRotation()), getX() + getWidth()/2, getY() + getHeight()/2);
+        g2.setTransform(transform);
+        g2.fillRect(getX(),getY(),getWidth(),getHeight());
+        g2.setTransform(old);
     }
 }

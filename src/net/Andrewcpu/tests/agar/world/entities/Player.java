@@ -1,7 +1,6 @@
-package net.Andrewcpu.tests.world.entities;
+package net.Andrewcpu.tests.agar.world.entities;
 
 import net.Andrewcpu.engine.Engine;
-import net.Andrewcpu.engine.utils.*;
 import net.Andrewcpu.engine.utils.Vector;
 import net.Andrewcpu.engine.world.Entity;
 import net.Andrewcpu.engine.world.World;
@@ -18,11 +17,43 @@ public class Player extends Entity {
     private Color color = Color.WHITE;
     private Point target = new Point(0,0);
     private int speed = 1;
-    private int health = 500, maxHealth = 500;
-    private java.util.List<Integer> keyCodes = new ArrayList<>();
-    private double rotation = 0;
+    private double size = -1;
+    private int health, maxHealth;
+    private java.util.List<Integer> keyCodes = Collections.synchronizedList(new ArrayList<>());
     private net.Andrewcpu.engine.utils.Vector velocity = new Vector(0,0);
     private boolean AI = false, respawn = true;
+
+    private int gunPower = 0,gunPowerMax = 100;
+
+    public double getSize() {
+        return size;
+    }
+
+    public void setSize(double size) {
+        if(this.size==-1){
+            this.size = size;
+            setMaxHealth((int)size * 50);
+            //setHealth(getMaxHealth());
+            setWidth((int)size * 10);
+            setHeight((int)size * 10);
+        }
+    }
+
+    public int getGunPower() {
+        return gunPower;
+    }
+
+    public void setGunPower(int gunPower) {
+        this.gunPower = gunPower;
+    }
+
+    public int getGunPowerMax() {
+        return gunPowerMax;
+    }
+
+    public void setGunPowerMax(int gunPowerMax) {
+        this.gunPowerMax = gunPowerMax;
+    }
 
     public boolean isRespawn() {
         return respawn;
@@ -56,18 +87,6 @@ public class Player extends Entity {
 
     public void setVelocity(Vector velocity) {
         this.velocity = velocity;
-    }
-
-    public double getAngle() {
-        return Math.toRadians(rotation);
-    }
-
-    public double getRotation() {
-        return rotation;
-    }
-
-    public void setRotation(double rotation) {
-        this.rotation = rotation;
     }
 
     public void pressKey(int i){
@@ -162,6 +181,22 @@ public class Player extends Entity {
         point.setLocation(point.getX() + x, point.getY() + y);
         return point;
     }
+    public Point moveForwardSteps(int steps, Point point){
+        double x = Math.cos(getAngle())*steps;
+        double y = Math.sin(getAngle())*steps;
+        point.setLocation(point.getX() + x, point.getY() + y);
+        return point;
+    }
+
+
+    public void heal(int health){
+        if(health + getHealth() > getMaxHealth()){
+            setHealth(getMaxHealth());
+        }
+        else{
+            setHealth(getHealth() + health);
+        }
+    }
 
     public void moveForward(int speed) {
         double x = Math.cos(getAngle())*speed;
@@ -189,21 +224,33 @@ public class Player extends Entity {
                 setRotation(getRotation()-1);
             }
             moveForward(getSpeed());
-            if(getLocation().distance(getTarget())<=200){
-                  fireBullet(target);
+            if(getLocation().distance(getTarget())<=200 && getGunPower()>0){
+                fireBullet(target);
+                setGunPower(getGunPower()-10);
             }
+            if(getGunPower() < getGunPowerMax())
+                setGunPower(getGunPower()+1);
         }
     }
-
-    public void fireBullet(Point point){
-        Point start = getLocation();
-        start.translate(getWidth()/2,getHeight()/2);
-        Vector vector = new Vector(-(start.getY() - point.getY()) , (start.getX() - point.getX()));
-        Bullet bullet = new Bullet((int)start.getX(),(int)start.getY(),5,5, this);
-        bullet.setAngle(getRotation());
-        bullet.setSlope(vector);
-        World.getInstance().addEntity(bullet);
+    public void eat(Food food){
+        int value = food.getValue();
+        setSize(getSize() + 0.01);
+        heal(value);
+        World.getInstance().removeEntity(food);
     }
+    public void fireBullet(Point point){
+        if(getGunPower()<=5 ){
+            return;
+        }
+            Point start = moveForwardSteps(10, new Point(getX() + getWidth()/2, getY() + getHeight()/2));
+         //   start.translate(getWidth() / 2, getHeight() / 2);
+            Vector vector = new Vector(-(start.getY() - point.getY()), (start.getX() - point.getX()));
+            Bullet bullet = new Bullet((int) start.getX(), (int) start.getY(), 5, 5, this);
+            bullet.setAngle(getRotation());
+            bullet.setSlope(vector);
+            World.getInstance().addEntity(bullet);
+    }
+
 
     @Override
     public void draw(Graphics g) {
@@ -217,9 +264,16 @@ public class Player extends Entity {
         g2.setTransform(old);
         double width = getWidth();
         double calcWid = width * ((double)getHealth()/(double)getMaxHealth());
-        g.setColor(Color.WHITE);
-        g.fillRect(getX(),getY()-getHeight()-5,getWidth(),10);
+        g.setColor(Color.LIGHT_GRAY);
+        g.fillRect(getX(),getY()-40,getWidth(),10);
         g.setColor(Color.RED);
-        g.fillRect(getX(),getY()-getHeight()-5,(int)calcWid,10);
+        g.fillRect(getX(),getY()-40,(int)calcWid,10);
+
+        g.setColor(Color.CYAN);
+        Point center = getLocation();
+        center.translate(getWidth()/2,(getHealth()/2));
+        Point start = moveForwardSteps(40, new Point(getX() + getWidth()/2, getY() + getHeight()/2));
+        g.fillRect((int)start.getX(),(int)start.getY(),10,10);
+
     }
 }

@@ -1,6 +1,5 @@
-package net.Andrewcpu.tests.world.entities;
+package net.Andrewcpu.tests.agar.world.entities;
 
-import com.sun.corba.se.impl.orbutil.graph.Graph;
 import net.Andrewcpu.engine.Engine;
 import net.Andrewcpu.engine.utils.Vector;
 import net.Andrewcpu.engine.world.Entity;
@@ -16,6 +15,7 @@ public class Bullet extends Entity {
     private Vector slope = new Vector(0,0);
     private double angle = 0;
     private Entity shooter = null;
+    private double speed = 5;
     public Bullet(int x, int y, int width, int height, Entity shooter) {
         super(x, y, width, height);
         this.x = x;
