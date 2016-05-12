@@ -54,7 +54,6 @@ public class Frame extends JComponent implements MouseMotionListener,Renderable,
         for(net.Andrewcpu.engine.listeners.KeyListener keyListener : Engine.getEventManager().getKeyListeners()){
             keyListener.keyPressed(e.getKeyCode());
         }
-        System.out.println("TEST");
     }
 
     @Override
