@@ -45,11 +45,9 @@ public class World implements Renderable{
         }
         return ents;
     }
-
     public void setEntities(LinkedList<Entity> entities) {
         this.entities = entities;
     }
-
     public void tick(){
         entities.removeAll(removeQueue);
         entities.addAll(addQueue);
@@ -66,18 +64,17 @@ public class World implements Renderable{
             }
         }
     }
-
     private static void throwCollision(Entity entity, Entity entity2){
         for(CollisionListener collisionListener : Engine.getEventManager().getCollisionListeners()){
             collisionListener.onCollision(entity,entity2);
         }
     }
-
     @Override
     public void draw(Graphics g) {
         g.setColor(Color.BLACK);
         g.fillRect(0,0,Engine.getWIDTH(),Engine.getHEIGHT());
-        for(Entity entity : entities)
-            entity.draw(g);
+        try{
+            entities.forEach((entity)-> entity.draw(g));
+        }catch (ConcurrentModificationException ex){}
     }
 }
