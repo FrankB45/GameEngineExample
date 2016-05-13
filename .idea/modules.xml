@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://J://GameEngineExample/GameEngineExample.iml" filepath="J://GameEngineExample/GameEngineExample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GameEngineExample.iml" filepath="$PROJECT_DIR$/GameEngineExample.iml" />
     </modules>
   </component>
 </project>
