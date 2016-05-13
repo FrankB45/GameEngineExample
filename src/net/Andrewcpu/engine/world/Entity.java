@@ -103,6 +103,25 @@ public class Entity implements Renderable{
         setY(getY() + speed);
     }
 
+    public void transform(int x, int y, double rotation){
+        setX(x);
+        setY(y);
+        setRotation(rotation);
+    }
+
+    public void moveForward(int speed) {
+        double x = Math.cos(getAngle())*speed;
+        double y = Math.sin(getAngle())*speed;
+        setX(getX() + (int)x);
+        setY(getY() + (int)y);
+    }
+    public void moveBackward(int speed) {
+        double x = Math.cos(getAngle())*speed;
+        double y = Math.sin(getAngle())*speed;
+        setX(getX() - (int)x);
+        setY(getY() - (int)y);
+    }
+
     public void tick(){
 
     }

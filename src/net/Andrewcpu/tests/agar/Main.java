@@ -54,11 +54,12 @@ public class Main extends JFrame{
             int y = random.nextInt(Engine.getHEIGHT());
             Player enemy = new Player(x,y,50,50, true);
             enemy.setSize(random.nextInt(11 - 1)+ 1);
-        enemy.setHealth(enemy.getMaxHealth());
+            enemy.setHealth(enemy.getMaxHealth());
             enemy.setRespawn(false);
             enemies.add(enemy);
             enemy.setColor(Color.RED);
             enemy.setSpeed(3);
+        enemy.setTarget(player);
             World.getInstance().addEntity(enemy);
     }
 
@@ -78,21 +79,21 @@ public class Main extends JFrame{
                 ((Player)((Bullet)entity2).getShooter()).heal(5);
                 World.getInstance().removeEntity(entity2);
             }
-            if(entity1 instanceof Player && entity2 instanceof Player){
-                Player player = (Player)entity1;
-                Player player2 = (Player)entity2;
-                if(player2.isAI() && player.getSize() > player2.getSize()){
-                    int health = player2.getHealth();
-                    player.setSize(player2.getSize()/2 + player.getSize());
-                    if(player.getHealth() + health > player.getMaxHealth()){
-                        player.setHealth(player.getMaxHealth());
-                    }
-                    else{
-                        player.setHealth(player.getHealth() + health);
-                    }
-                    World.getInstance().removeEntity(player2);
-                }
-            }
+//            if(entity1 instanceof Player && entity2 instanceof Player){
+//                Player player = (Player)entity1;
+//                Player player2 = (Player)entity2;
+//                if(player2.isAI() && player.getSize() > player2.getSize()){
+//                    int health = player2.getHealth();
+//                    player.setSize(player2.getSize()/2 + player.getSize());
+//                    if(player.getHealth() + health > player.getMaxHealth()){
+//                        player.setHealth(player.getMaxHealth());
+//                    }
+//                    else{
+//                        player.setHealth(player.getHealth() + health);
+//                    }
+//                    World.getInstance().removeEntity(player2);
+//                }
+//            }
 //            if(entity1 instanceof Player && entity2 instanceof Food){
 //                ((Player)entity1).eat(((Food)entity2));
 //            }
@@ -106,8 +107,8 @@ public class Main extends JFrame{
             }
             @Override
             public void mouseClicked(Point point){
-                player.setAI(true);
-                player.setTarget(point);
+             //   player.setAI(true);
+               // player.setTarget(point);
             }
         });
         Engine.getEventManager().registerKeyListener(new KeyListener() {
@@ -143,7 +144,7 @@ public class Main extends JFrame{
     public void tick(){
         frame.requestFocus();
         for(Player enemy : enemies){
-            enemy.setTarget(player.getLocation());
+            enemy.setTarget(player);
         }
         boolean charge = true;
         for(int i = 0; i<player.getKeyCodes().size(); i++){

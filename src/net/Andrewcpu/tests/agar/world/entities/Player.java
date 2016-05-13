@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class Player extends Entity {
     private Color color = Color.WHITE;
-    private Point target = new Point(0,0);
+    private Entity target = null;
     private int speed = 1;
     private double size = -1;
     private int health, maxHealth;
@@ -151,11 +151,11 @@ public class Player extends Entity {
         this.color = color;
     }
 
-    public Point getTarget() {
+    public Entity getTarget() {
         return target;
     }
 
-    public void setTarget(Point target) {
+    public void setTarget(Entity target) {
         this.target = target;
     }
 
@@ -198,18 +198,6 @@ public class Player extends Entity {
         }
     }
 
-    public void moveForward(int speed) {
-        double x = Math.cos(getAngle())*speed;
-        double y = Math.sin(getAngle())*speed;
-        setX(getX() + (int)x);
-        setY(getY() + (int)y);
-    }
-    public void moveBackward(int speed) {
-        double x = Math.cos(getAngle())*speed;
-        double y = Math.sin(getAngle())*speed;
-        setX(getX() - (int)x);
-        setY(getY() - (int)y);
-    }
     @Override
     public void tick(){
         if(isAI()){
@@ -223,10 +211,13 @@ public class Player extends Entity {
             else if ((getX() - target.getX()) * dirY < (getY() - target.getY()) * dirX){
                 setRotation(getRotation()-1);
             }
-            moveForward(getSpeed());
-            if(getLocation().distance(getTarget())<=200 && getGunPower()>0){
-                fireBullet(target);
-                setGunPower(getGunPower()-10);
+
+            if(getAngleToPoint(target.getLocation())!=getAngle()){
+                moveForward(getSpeed());
+            }
+            if(getLocation().distance(getTarget().getLocation())<=300 && getGunPower()>0){
+                fireBullet(target.getLocation());
+                setGunPower(getGunPower()-2);
             }
             if(getGunPower() < getGunPowerMax())
                 setGunPower(getGunPower()+1);
@@ -274,6 +265,8 @@ public class Player extends Entity {
         center.translate(getWidth()/2,(getHealth()/2));
         Point start = moveForwardSteps(40, new Point(getX() + getWidth()/2, getY() + getHeight()/2));
         g.fillRect((int)start.getX(),(int)start.getY(),10,10);
+//        if(isAI())
+//            g.drawLine(getX(),getY(),(int)target.getX(),(int)target.getY());
 
     }
 }
