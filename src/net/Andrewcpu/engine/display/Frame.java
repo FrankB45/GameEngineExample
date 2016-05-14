@@ -19,7 +19,14 @@ import java.util.*;
  */
 public class Frame extends JComponent implements MouseMotionListener,Renderable,KeyListener, java.awt.event.MouseListener{
     private java.util.List<Element> elements = new ArrayList<>();
+    private static Frame instance = null;
+
+    public static Frame getInstance() {
+        return instance;
+    }
+
     public Frame(){
+        instance = this;
         addKeyListener(this);
         addMouseMotionListener(this);
         addMouseListener(this);
@@ -46,7 +53,10 @@ public class Frame extends JComponent implements MouseMotionListener,Renderable,
 
     @Override
     public void draw(Graphics g) {
-        elements.forEach(element -> {if(!element.isHidden())element.draw(g);});
+        elements.forEach(element -> {
+            if(!element.isHidden())
+                element.draw(g);
+        });
     }
 
     @Override

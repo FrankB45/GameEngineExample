@@ -8,10 +8,11 @@ import java.util.List;
 /**
  * Created by stein on 5/10/2016.
  */
-public class Entity implements Renderable{
+public class Entity implements Renderable,Animatable{
     private UUID uuid = UUID.randomUUID();
     private int x,y,width,height;
     private double rotation = 0;
+    private List<Integer> keys = new ArrayList<>();
 
     public Entity(int x, int y, int width, int height) {
         this.x = x;
@@ -163,5 +164,26 @@ public class Entity implements Renderable{
         g2.setTransform(transform);
         g2.fillRect(getX(),getY(),getWidth(),getHeight());
         g2.setTransform(old);
+    }
+
+    public void pressKey(int key){
+        while(keys.contains(key)){
+            keys.remove(Integer.valueOf(key));
+        }
+        keys.add(key);
+    }
+    public void releaseKey(int key){
+        while(keys.contains(key)){
+            keys.remove(Integer.valueOf(key));
+        }
+    }
+    public boolean isPressing(int key){
+        return keys.contains(key);
+    }
+
+
+    @Override
+    public void frame() {
+
     }
 }
