@@ -9,6 +9,15 @@ import java.awt.*;
  */
 public class Element implements Renderable{
     private int x = 0, y = 0;
+    private boolean hidden = false;
+
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
+    }
 
     public int getX() {
         return x;
@@ -30,4 +39,5 @@ public class Element implements Renderable{
     public void draw(Graphics g) {
 
     }
+
 }

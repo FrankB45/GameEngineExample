@@ -181,6 +181,13 @@ public class Player extends Entity {
         point.setLocation(point.getX() + x, point.getY() + y);
         return point;
     }
+    public Point moveForwardSteps(int steps, double angle){
+        Point point = getLocation();
+        double x = Math.cos(angle)*steps;
+        double y = Math.sin(angle)*steps;
+        point.setLocation(point.getX() + x, point.getY() + y);
+        return point;
+    }
     public Point moveForwardSteps(int steps, Point point){
         double x = Math.cos(getAngle())*steps;
         double y = Math.sin(getAngle())*steps;
@@ -211,10 +218,12 @@ public class Player extends Entity {
             else if ((getX() - target.getX()) * dirY < (getY() - target.getY()) * dirX){
                 setRotation(getRotation()-1);
             }
-
-            if(getAngleToPoint(target.getLocation())!=getAngle()){
-                moveForward(getSpeed());
+            if(getLocation().distance(getTarget().getLocation())>=300){
+                if(getAngleToPoint(target.getLocation())!=getAngle()){
+                    moveForward(getSpeed());
+                }
             }
+
             if(getLocation().distance(getTarget().getLocation())<=300 && getGunPower()>0){
                 fireBullet(target.getLocation());
                 setGunPower(getGunPower()-2);
@@ -228,6 +237,12 @@ public class Player extends Entity {
         setSize(getSize() + 0.01);
         heal(value);
         World.getInstance().removeEntity(food);
+    }
+    public void explode(){
+        for(int i =0;  i<=359; i++){
+            Point target = moveForwardSteps(500,i);
+            fireBullet(target);
+        }
     }
     public void fireBullet(Point point){
         if(getGunPower()<=5 ){
@@ -251,7 +266,7 @@ public class Player extends Entity {
         transform.rotate(Math.toRadians(getRotation()), getX() + getWidth()/2, getY() + getHeight()/2);
         g2.setTransform(transform);
         g2.setColor(getColor());
-        g2.fillRect(getX(),getY(),getWidth(),getHeight());
+        g2.fillOval(getX(),getY(),getWidth(),getHeight());
         g2.setTransform(old);
         double width = getWidth();
         double calcWid = width * ((double)getHealth()/(double)getMaxHealth());

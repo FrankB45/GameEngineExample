@@ -1,5 +1,6 @@
 package net.Andrewcpu.tests.agar;
 
+import javafx.scene.input.KeyCode;
 import net.Andrewcpu.engine.Engine;
 import net.Andrewcpu.engine.listeners.KeyListener;
 import net.Andrewcpu.engine.listeners.MouseListener;
@@ -187,6 +188,9 @@ public class Main extends JFrame{
                     player.setRotation(0);
                 }
                 player.setAI(false);
+            }
+            if(keyCode== KeyEvent.VK_E){
+                player.explode();
             }
             if(keyCode==KeyEvent.VK_UP){
                 player.setSize(player.getSize()+1);

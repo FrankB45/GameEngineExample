@@ -111,23 +111,19 @@ public class Bullet extends Entity {
 
         }
         else{
-            g.setColor(Color.RED);
-            g.fillRect(getX(),getY(),getWidth(),getHeight());
+            g.setColor(Color.ORANGE);
+            g.fillOval(getX(),getY(),getWidth(),getHeight());
         }
     }
 
     @Override
     public void tick(){
-        moveForward(5);
+        moveForward(10);
         setAge(getAge()+1);
         if(getAge()==getMaxAge()){
             World.getInstance().removeEntity(this);
         }
 //        setX(getX() + (int)slope.getX());
 //        setY(getY() + (int)slope.getY());
-    }
-    public void moveForward(int speed) {
-        x += Math.cos(getAngle())*speed;
-        y += Math.sin(getAngle())*speed;
     }
 }

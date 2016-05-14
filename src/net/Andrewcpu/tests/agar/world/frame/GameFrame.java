@@ -14,12 +14,12 @@ public class GameFrame extends Frame{
     public void draw(Graphics g){
         if(Main.player != null){
             double width = Double.valueOf(Engine.getWIDTH()/50);
-            double height = Double.valueOf(Engine.getHEIGHT());
+            double height = Double.valueOf(Engine.getHEIGHT() / 2);
             double drawHeight = (height * ((double)Main.player.getGunPower() / (double)Main.player.getGunPowerMax()));
             g.setColor(Color.WHITE);
-            g.fillRect(0,0,(int)width,(int)height);
+            g.fillRect(0,Engine.getHEIGHT() / 4,(int)width,(int)height);
             g.setColor(Color.pink);
-            g.fillRect(0,getHeight(),(int)width, -(int)drawHeight);
+            g.fillRect(0,Engine.getHEIGHT() - (Engine.getHEIGHT() / 4),(int)width, -(int)drawHeight);
             g.setColor(Color.BLACK);
         }
     }

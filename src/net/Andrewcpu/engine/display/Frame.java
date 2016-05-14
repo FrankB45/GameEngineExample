@@ -46,7 +46,7 @@ public class Frame extends JComponent implements MouseMotionListener,Renderable,
 
     @Override
     public void draw(Graphics g) {
-        elements.forEach(element -> {element.draw(g);});
+        elements.forEach(element -> {if(!element.isHidden())element.draw(g);});
     }
 
     @Override

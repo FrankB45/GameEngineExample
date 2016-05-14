@@ -2,7 +2,8 @@ package net.Andrewcpu.engine.world;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.util.UUID;
+import java.util.*;
+import java.util.List;
 
 /**
  * Created by stein on 5/10/2016.
@@ -124,6 +125,33 @@ public class Entity implements Renderable{
 
     public void tick(){
 
+    }
+
+    public java.util.List<Entity> getEntitiesInLineOfSight(Point point){
+        List<Entity> entities = new ArrayList<>();
+        double pX = point.getX() - getX();
+        double pY = point.getY() - getY();
+        for(int i = getX(); i<=point.getX(); i+=pX){
+            for(int j = getY(); j<=point.getY(); j+=pY){
+                for(Entity entity : World.getInstance().getEntities()){
+                    if(entity.getBounds().contains(i,j))
+                        entities.add(entity);
+                }
+            }
+        }
+        return entities;
+    }
+    public java.util.List<Entity> getEntitiesInLineOfSight(Entity entity){
+        List<Entity> list = getEntitiesInLineOfSight(entity.getLocation());
+        if(list.contains(this))
+            list.remove(this);
+        if(list.contains(entity))
+            list.remove(entity);
+        return list;
+    }
+
+    public boolean hasLineOfSight(Entity entity){
+        return getEntitiesInLineOfSight(entity).size()==0;
     }
 
     @Override

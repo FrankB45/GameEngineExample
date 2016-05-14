@@ -19,6 +19,7 @@ public class TextElement extends Element implements Renderable {
         setupFont();
     }
 
+
     public TextElement(String text, int x, int y, int fontSize) {
         this.text = text;
         setX(x);
