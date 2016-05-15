@@ -126,6 +126,7 @@ public class World implements Renderable{
             g.drawImage(getBackgroundImage(),0,0,Engine.getWIDTH(),Engine.getHEIGHT(),null);
         try{
             entities.forEach((entity)-> entity.draw(g));
+            solidObjects.forEach((solid)->solid.draw(g));
         }catch (ConcurrentModificationException ex){}
     }
 }

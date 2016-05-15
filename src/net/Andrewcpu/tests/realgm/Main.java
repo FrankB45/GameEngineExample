@@ -6,6 +6,7 @@ import net.Andrewcpu.engine.listeners.CollisionListener;
 import net.Andrewcpu.engine.listeners.KeyListener;
 import net.Andrewcpu.engine.listeners.MouseListener;
 import net.Andrewcpu.engine.utils.Log;
+import net.Andrewcpu.engine.utils.audio.Sound;
 import net.Andrewcpu.engine.utils.audio.SoundManager;
 import net.Andrewcpu.engine.utils.image.SpriteSheet;
 import net.Andrewcpu.engine.world.Entity;
@@ -99,6 +100,7 @@ public class Main extends JFrame{
                 if(e1 instanceof Player && e2 instanceof Bullet){
                     if(((Bullet)e2).getShooter()!=e1) {
                         ((Player) e1).damage(1);
+                        ((Player)e1).hit();
                         World.getInstance().removeEntity(e2);
                     }
                 }
@@ -120,8 +122,10 @@ public class Main extends JFrame{
 //
 //            }
 //        });
-        new SoundManager().playSound("net/Andrewcpu/tests/realgm/res/background-sound.mp3");
-
+        //new SoundManager().playSound("/net/Andrewcpu/tests/realgm/res/background-sound.mp3");
+        Sound sound = new Sound("/net/Andrewcpu/tests/realgm/res/background-sound.wav");
+        sound.setLoop(true);
+        sound.start();
     }
     public void tick(){
         if(player.isPressing(KeyEvent.VK_D)){
@@ -147,8 +151,10 @@ public class Main extends JFrame{
             player.left((player.isPressing(KeyEvent.VK_SHIFT) ? 10 : 5));
         }
         if(player.isPressing(KeyEvent.VK_SPACE)){
-            if(player.isJumping() && player.getJumpHeight()<=0)
+            if(player.isJumping() && player.getJumpHeight()<=0) {
                 player.jump(15);
+
+            }
 
         }
         if(player.isPressing(KeyEvent.VK_F)){

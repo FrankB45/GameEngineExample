@@ -2,6 +2,7 @@ package net.Andrewcpu.tests.realgm.entities;
 
 import net.Andrewcpu.engine.Engine;
 import net.Andrewcpu.engine.utils.Log;
+import net.Andrewcpu.engine.utils.audio.Sound;
 import net.Andrewcpu.engine.utils.image.SpriteSheet;
 import net.Andrewcpu.engine.world.Entity;
 import net.Andrewcpu.engine.world.World;
@@ -24,6 +25,8 @@ public class Player extends Entity{
     private boolean AI = false;
     private Entity target = null;
     private boolean reloading = false;
+    private Sound jump = new Sound("/net/Andrewcpu/tests/realgm/res/jump.wav");
+    private Sound hit = new Sound("/net/Andrewcpu/tests/realgm/res/hit.wav");
     public Player(int x, int y, int width, int height) {
         super(x, y, width, height);
     }
@@ -107,6 +110,8 @@ public class Player extends Entity{
     public void jump( int height ){
         jumpHeight = height;
         setOnSolid(false);
+        jump.start();
+
     }
     public void respawn(){
         setHealth(getMaxHealth());
@@ -123,6 +128,9 @@ public class Player extends Entity{
     public int getJumpHeight() {
         return jumpHeight;
     }
+
+
+
 
     public void setJumpHeight(int jumpHeight) {
         this.jumpHeight = jumpHeight;
@@ -211,6 +219,10 @@ public class Player extends Entity{
                 playerFrame = 3;
             }
         }
+    }
+
+    public void hit(){
+        hit.start();
     }
 
     public void shootBullet(){

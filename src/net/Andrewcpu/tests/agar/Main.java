@@ -99,19 +99,6 @@ public class Main extends JFrame{
 //                ((Player)entity1).eat(((Food)entity2));
 //            }
         });
-        Engine.getEventManager().registerMouseListener(new MouseListener() {
-            @Override
-            public void mouseMoved(Point point) {
-            }
-            @Override
-            public void mouseDragged(Point point) {
-            }
-            @Override
-            public void mouseClicked(Point point){
-             //   player.setAI(true);
-               // player.setTarget(point);
-            }
-        });
         Engine.getEventManager().registerKeyListener(new KeyListener() {
             @Override
             public void keyPressed(int keyCode) {

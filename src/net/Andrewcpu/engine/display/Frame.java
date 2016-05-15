@@ -86,19 +86,23 @@ public class Frame extends JComponent implements MouseMotionListener,Renderable,
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        for(MouseListener mouseListener : Engine.getEventManager().getMouseListeners()){
-            mouseListener.mouseClicked(e.getPoint());
-        }
+//        for(MouseListener mouseListener : Engine.getEventManager().getMouseListeners()){
+//            mouseListener.mouseClicked(e.getPoint());
+//        }
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        for(MouseListener mouseListener : Engine.getEventManager().getMouseListeners()){
+            mouseListener.mousePressed(e.getPoint());
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        for(MouseListener mouseListener : Engine.getEventManager().getMouseListeners()){
+            mouseListener.mouseReleased(e.getPoint());
+        }
     }
 
     @Override

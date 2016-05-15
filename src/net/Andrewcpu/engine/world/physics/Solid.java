@@ -1,11 +1,13 @@
 package net.Andrewcpu.engine.world.physics;
 
+import net.Andrewcpu.engine.world.Renderable;
+
 import java.awt.*;
 
 /**
  * Created by stein on 5/14/2016.
  */
-public class Solid {
+public class Solid implements Renderable{
     private int x, y, width, height;
 
     public Solid(int x, int y, int width, int height) {
@@ -49,5 +51,10 @@ public class Solid {
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    @Override
+    public void draw(Graphics g) {
+
     }
 }

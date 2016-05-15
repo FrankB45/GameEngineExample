@@ -33,6 +33,21 @@ public class Entity implements Renderable,Animatable{
         this.rotation = rotation;
     }
 
+
+    public float getAngleToPoint(Point target) {
+        float angle = (float) Math.toDegrees(Math.atan2(target.y - getY(), target.x - getX()));
+
+        if(angle < 0){
+            angle += 360;
+        }
+
+        return angle;
+    }
+
+    public void kill(){
+        World.getInstance().removeEntity(this);
+    }
+
     public UUID getUUID() {
         return uuid;
     }
