@@ -1,6 +1,6 @@
 package net.Andrewcpu.engine.display.elements;
 
-import net.Andrewcpu.engine.world.Renderable;
+import net.Andrewcpu.engine.display.Renderable;
 
 import java.awt.*;
 
@@ -17,7 +17,7 @@ public class ProgressBarElement extends Element implements Renderable {
         this.width = width;
         this.height = height;
     }
-
+    //new ProgressBarElement(x,y,w,h);
     public int getWidth() {
         return width;
     }

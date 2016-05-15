@@ -1,6 +1,7 @@
 package net.Andrewcpu.engine.display.elements;
 
-import net.Andrewcpu.engine.world.Renderable;
+import net.Andrewcpu.engine.display.Clickable;
+import net.Andrewcpu.engine.display.Renderable;
 
 import java.awt.*;
 
@@ -39,5 +40,4 @@ public class Element implements Renderable{
     public void draw(Graphics g) {
 
     }
-
 }

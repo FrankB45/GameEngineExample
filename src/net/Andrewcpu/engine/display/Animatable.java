@@ -1,4 +1,4 @@
-package net.Andrewcpu.engine.world;
+package net.Andrewcpu.engine.display;
 
 /**
  * Created by stein on 5/14/2016.

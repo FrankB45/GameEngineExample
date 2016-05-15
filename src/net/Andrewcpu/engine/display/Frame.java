@@ -3,7 +3,6 @@ package net.Andrewcpu.engine.display;
 import net.Andrewcpu.engine.Engine;
 import net.Andrewcpu.engine.display.elements.Element;
 import net.Andrewcpu.engine.listeners.MouseListener;
-import net.Andrewcpu.engine.world.Renderable;
 import net.Andrewcpu.engine.world.World;
 
 import javax.swing.*;
@@ -93,6 +92,14 @@ public class Frame extends JComponent implements MouseMotionListener,Renderable,
 
     @Override
     public void mousePressed(MouseEvent e) {
+        for(Element element : elements){
+            if(element instanceof Clickable){
+                Clickable clickable = (Clickable)element;
+                if(((Clickable) element).getBounds().contains(e.getX(),e.getY())){
+                    clickable.onClick();
+                }
+            }
+        }
         for(MouseListener mouseListener : Engine.getEventManager().getMouseListeners()){
             mouseListener.mousePressed(e.getPoint());
         }

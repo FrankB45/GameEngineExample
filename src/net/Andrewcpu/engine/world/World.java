@@ -1,8 +1,8 @@
 package net.Andrewcpu.engine.world;
 
 import net.Andrewcpu.engine.Engine;
+import net.Andrewcpu.engine.display.Renderable;
 import net.Andrewcpu.engine.listeners.CollisionListener;
-import net.Andrewcpu.engine.utils.Log;
 import net.Andrewcpu.engine.world.physics.Solid;
 
 import java.awt.*;
@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by stein on 5/10/2016.
  */
-public class World implements Renderable{
+public class World implements Renderable {
     private static World instance = null;
     private Color color = Color.WHITE;
     private Image backgroundImage = null;

@@ -2,6 +2,7 @@ package net.Andrewcpu.tests.agar;
 
 import javafx.scene.input.KeyCode;
 import net.Andrewcpu.engine.Engine;
+import net.Andrewcpu.engine.display.elements.ButtonElement;
 import net.Andrewcpu.engine.listeners.KeyListener;
 import net.Andrewcpu.engine.listeners.MouseListener;
 import net.Andrewcpu.engine.world.*;
@@ -31,9 +32,9 @@ public class Main extends JFrame{
         Engine.setWIDTH(getWidth());
         Engine.setHEIGHT(getHeight());
         setTitle("Game");
-        setupWorld();
         frame = new GameFrame();
         frame.setBounds(getBounds());
+        setupWorld();
         add(frame);
         setVisible(true);
         addComponentListener(new ComponentAdapter() {
@@ -64,8 +65,10 @@ public class Main extends JFrame{
             World.getInstance().addEntity(enemy);
     }
 
+    private ButtonElement button = new ButtonElement(100,100,100,20,"Hello World",()->System.out.print("HELLO WORLD"));
     public void setupWorld(){
         createEnemies();
+        frame.addElement(button);
         createEnemies();
         player.setSize(5);
         World.getInstance().setColor(Color.BLACK);

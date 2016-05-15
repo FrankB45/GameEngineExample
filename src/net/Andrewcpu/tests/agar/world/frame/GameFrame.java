@@ -22,6 +22,7 @@ public class GameFrame extends Frame{
             g.fillRect(0,Engine.getHEIGHT() - (Engine.getHEIGHT() / 4),(int)width, -(int)drawHeight);
             g.setColor(Color.BLACK);
         }
+        super.draw(g);
     }
 
 }

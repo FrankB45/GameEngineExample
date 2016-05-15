@@ -1,6 +1,6 @@
 package net.Andrewcpu.engine.world.physics;
 
-import net.Andrewcpu.engine.world.Renderable;
+import net.Andrewcpu.engine.display.Renderable;
 
 import java.awt.*;
 

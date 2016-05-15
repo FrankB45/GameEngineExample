@@ -1,4 +1,4 @@
-package net.Andrewcpu.engine.world;
+package net.Andrewcpu.engine.display;
 
 import java.awt.*;
 
