@@ -2,7 +2,7 @@ package net.Andrewcpu.tests.game;
 
 import net.Andrewcpu.engine.Engine;
 import net.Andrewcpu.engine.display.elements.TextElement;
-import net.Andrewcpu.engine.listeners.KeyListener;
+import net.Andrewcpu.engine.listeners.KeyListener
 import net.Andrewcpu.engine.display.Frame;
 import net.Andrewcpu.engine.world.World;
 import net.Andrewcpu.tests.game.entities.Ball;
